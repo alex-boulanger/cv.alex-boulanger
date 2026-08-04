@@ -68,16 +68,9 @@ project name (`cv`) and the uploaded directory (`dist`) come from
 
 ### One-time Cloudflare setup
 
-Everything below is account-level and only needs doing once. Run the `wrangler`
-commands locally — they will open a browser to authenticate.
+Everything below is account-level and only needs doing once.
 
-**1. Create the Pages project.**
-
-```sh
-pnpm dlx wrangler pages project create cv --production-branch=main
-```
-
-**2. Collect the two values the workflow needs.**
+**1. Collect the two values the workflow needs.**
 
 `pnpm dlx wrangler whoami` prints the account ID. For the token, go to
 **My Profile → API Tokens → Create Token → Create Custom Token** and grant:
@@ -86,16 +79,18 @@ pnpm dlx wrangler pages project create cv --production-branch=main
 | ------- | ---------------- | ---------- |
 | Account | Cloudflare Pages | Edit       |
 
-Add both as repository secrets under **Settings → Secrets and variables →
-Actions**:
+Add both as environment secrets in the GitHub environment named `prod` under
+**Settings → Environments → prod → Environment secrets**:
 
 - `CLOUDFLARE_API_TOKEN`
 - `CLOUDFLARE_ACCOUNT_ID`
 
-**3. Push to `main`** so a production deployment exists. A custom domain cannot
+The workflow creates the `cv` Pages project if it does not already exist.
+
+**2. Push to `main`** so a production deployment exists. A custom domain cannot
 be attached to a project that has never deployed.
 
-**4. Attach the subdomain.** In the dashboard: **Workers & Pages → cv → Custom
+**3. Attach the subdomain.** In the dashboard: **Workers & Pages → cv → Custom
 domains → Set up a custom domain**, and enter `cv.alex-boulanger.dev`.
 
 Because `alex-boulanger.dev` is a zone on the same Cloudflare account,
