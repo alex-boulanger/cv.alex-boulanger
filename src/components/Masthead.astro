@@ -1,0 +1,38 @@
+---
+import { profile } from '../content';
+
+const telHref = `tel:${profile.phone.replace(/[^\d+]/g, '')}`;
+---
+
+<header class="masthead">
+  <div>
+    <h1 class="masthead__name">{profile.name}</h1>
+    <p class="masthead__title">{profile.title}</p>
+  </div>
+
+  <nav class="masthead__actions" aria-label="Document">
+    <a class="action" href={`/${profile.pdfFileName}`} download>PDF</a>
+    <button class="action" type="button" data-print>Print</button>
+  </nav>
+</header>
+
+<ul class="contact">
+  <li>{profile.location}</li>
+  <li><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
+  <li><a href={telHref}>{profile.phone}</a></li>
+  {
+    profile.links.map((link) => (
+      <li>
+        <a href={link.href} rel="me noopener">
+          {link.label}
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<script>
+  document
+    .querySelector('[data-print]')
+    ?.addEventListener('click', () => window.print());
+</script>

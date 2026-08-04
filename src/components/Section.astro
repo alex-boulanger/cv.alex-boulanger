@@ -1,0 +1,21 @@
+---
+interface Props {
+  /** Uppercase label shown in the rail, e.g. `Experience`. */
+  label: string;
+  /** Anchor id, also used to link the heading to the section. */
+  id: string;
+  /** Optional fact shown at the far right of the rule — only where it says something true. */
+  meta?: string;
+}
+
+const { label, id, meta } = Astro.props;
+---
+
+<section class="section" id={id} aria-labelledby={`${id}-label`}>
+  <div class="section__head">
+    <h2 class="section__label" id={`${id}-label`}>{label}</h2>
+    <span class="section__rule" aria-hidden="true"></span>
+    {meta && <span class="section__meta">{meta}</span>}
+  </div>
+  <slot />
+</section>

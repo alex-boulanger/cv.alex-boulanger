@@ -1,0 +1,121 @@
+/* ---------------------------------------------------------------------------
+   Print — the same document, measured for A4.
+
+   Playwright renders the PDF from this stylesheet, so what a recruiter opens
+   is the page they saw, not a second template. Screen colours are pinned back
+   to the light palette here because a PDF is always printed on white.
+--------------------------------------------------------------------------- */
+
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm 16mm;
+  }
+
+  :root {
+    --paper: #ffffff;
+    --paper-raised: #ffffff;
+    --ink: #15181b;
+    --ink-2: #3f464b;
+    --ink-3: #6b7378;
+    --rule: #d8dcda;
+    --rule-strong: #b6bcb9;
+    --accent: #0e6a58;
+    --accent-quiet: rgba(14, 106, 88, 0.16);
+
+    --step-label: 7.5pt;
+    --step-meta: 8pt;
+    --step-body: 9pt;
+    --step-lead: 10.5pt;
+    --step-role: 11pt;
+    --step-name: 27pt;
+
+    color-scheme: light;
+  }
+
+  body {
+    background: #fff;
+    line-height: 1.45;
+  }
+
+  .page {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Screen-only affordances. */
+  .masthead__actions,
+  .colophon {
+    display: none;
+  }
+
+  .masthead,
+  .contact,
+  .section {
+    animation: none;
+  }
+
+  a {
+    border-bottom: none;
+    color: inherit;
+  }
+
+  .contact {
+    margin-top: 1.1rem;
+    padding-top: 0.7rem;
+    gap: 0.2rem 0.85rem;
+  }
+
+  .section {
+    margin-top: 1.5rem;
+  }
+
+  .section__head {
+    margin-bottom: 0.85rem;
+  }
+
+  .roles {
+    gap: 1.15rem;
+  }
+
+  .highlights {
+    margin-top: 0.5rem;
+    gap: 0.2rem;
+  }
+
+  .stack {
+    gap: 0.8rem;
+  }
+
+  /* Keep a role, and at least its opening lines, on one page. */
+  .role,
+  .entry,
+  .group {
+    break-inside: avoid;
+  }
+
+  .section__head {
+    break-after: avoid;
+  }
+
+  .role__title,
+  .role__org,
+  .tenure,
+  .entry__title {
+    break-after: avoid;
+  }
+
+  .highlights li {
+    break-inside: avoid;
+  }
+
+  /* Chromium drops backgrounds unless asked twice. */
+  .tenure__track,
+  .highlights li::before,
+  .section__rule,
+  .contact {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

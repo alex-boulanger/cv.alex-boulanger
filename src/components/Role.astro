@@ -1,0 +1,46 @@
+---
+import type { Experience } from '../content/types';
+import { formatDuration, formatMonth, monthsBetween } from '../lib/dates';
+
+interface Props {
+  role: Experience;
+  /** Longest tenure in the list — every bar is drawn against this scale. */
+  scale: number;
+}
+
+const { role, scale } = Astro.props;
+
+const months = monthsBetween(role.start, role.end);
+const fill = `${Math.round((months / scale) * 100)}%`;
+const isCurrent = role.end === null;
+---
+
+<article class="role">
+  <h3 class="role__title">{role.role}</h3>
+  <p class="role__org">
+    <span class="role__company">{role.company}</span>
+    <span class="role__sep" aria-hidden="true">·</span>
+    <span class="role__place">{role.location}</span>
+  </p>
+
+  <p class:list={['tenure', isCurrent && 'tenure--current']}>
+    <span class="tenure__dates">
+      <time datetime={role.start}>{formatMonth(role.start)}</time>
+      <span aria-hidden="true"> – </span>
+      {
+        role.end ? (
+          <time datetime={role.end}>{formatMonth(role.end)}</time>
+        ) : (
+          <span>Present</span>
+        )
+      }
+    </span>
+    <span class="tenure__track" style={`--fill: ${fill}`} aria-hidden="true"
+    ></span>
+    <span class="tenure__length">{formatDuration(months)}</span>
+  </p>
+
+  <ul class="highlights">
+    {role.highlights.map((highlight) => <li>{highlight}</li>)}
+  </ul>
+</article>

@@ -7,11 +7,22 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && tsx scripts/generate-pdf.ts",
+    "build:site": "astro build",
+    "pdf": "tsx scripts/generate-pdf.ts",
     "preview": "astro preview",
+    "check": "astro check && tsx scripts/check-content.ts",
+    "check:content": "tsx scripts/check-content.ts",
     "astro": "astro"
   },
   "dependencies": {
     "astro": "^7.1.6"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/node": "^26.1.2",
+    "playwright": "^1.62.1",
+    "tsx": "^4.23.5",
+    "typescript": "^6.0.3"
   }
 }
