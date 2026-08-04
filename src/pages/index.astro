@@ -18,17 +18,18 @@ const updated = new Intl.DateTimeFormat('en', {
 }).format(new Date());
 
 const title = `${profile.name} — ${profile.title}`;
+const pdfHref = new URL(profile.pdfFileName, profile.siteUrl).href;
+const primarySiteLabel = new URL(profile.primarySiteUrl).hostname;
+const isDev = import.meta.env.DEV;
 ---
 
 <Base title={title} description={profile.summary}>
   <Masthead />
 
   <main>
-    <Section id="summary" label="Summary">
-      <p class="lead">{profile.summary}</p>
-    </Section>
+    <p class="lead intro">{profile.summary}</p>
 
-    <Section id="competencies" label="Core Competencies">
+    <Section id="competencies" label="Core Competencies" className="screen-only">
       <div class="stack">
         {
           skillGroups.map((group) => (
@@ -45,6 +46,7 @@ const title = `${profile.name} — ${profile.title}`;
       id="experience"
       label="Experience"
       meta={`${experiences.length} roles`}
+      printMeta={`${experiences.filter((role) => !role.print?.hidden).length} recent roles`}
     >
       <div class="roles">
         {experiences.map((role) => <Role role={role} />)}
@@ -56,19 +58,23 @@ const title = `${profile.name} — ${profile.title}`;
         <Section id="education" label="Education">
           <div class="roles">
             {education.map((entry) => (
-              <div class="entry">
-                <h3 class="entry__title">{entry.degree}</h3>
-                <p class="entry__org">
-                  {entry.school} · {entry.location}
+              <article class="entry">
+                <h3 class="role__title">{entry.degree}</h3>
+                <p class="role__org">
+                  <span class="role__company">{entry.school}</span>
+                  <span class="role__sep" aria-hidden="true">·</span>
+                  <span class="role__place">{entry.location}</span>
                 </p>
-                <p class="entry__meta">
-                  <time datetime={entry.start}>{formatMonth(entry.start)}</time>
-                  <span aria-hidden="true"> – </span>
-                  {entry.end ? (
-                    <time datetime={entry.end}>{formatMonth(entry.end)}</time>
-                  ) : (
-                    <span>Present</span>
-                  )}
+                <p class="tenure">
+                  <span class="tenure__dates">
+                    <time datetime={entry.start}>{formatMonth(entry.start)}</time>
+                    <span aria-hidden="true"> – </span>
+                    {entry.end ? (
+                      <time datetime={entry.end}>{formatMonth(entry.end)}</time>
+                    ) : (
+                      <span>Present</span>
+                    )}
+                  </span>
                 </p>
                 {entry.highlights.length > 0 && (
                   <ul class="highlights">
@@ -77,14 +83,14 @@ const title = `${profile.name} — ${profile.title}`;
                     ))}
                   </ul>
                 )}
-              </div>
+              </article>
             ))}
           </div>
         </Section>
       )
     }
 
-    <Section id="languages" label="Languages">
+    <Section id="languages" label="Languages" className="languages-section">
       <ul class="languages">
         {
           languages.map((language) => (
@@ -98,7 +104,19 @@ const title = `${profile.name} — ${profile.title}`;
     </Section>
   </main>
 
-  <p class="colophon">
-    Updated {updated}
-  </p>
+  <footer class="colophon screen-only">
+    <span>Updated {updated}</span>
+    {
+      isDev ? (
+        <button class="colophon__link" type="button" data-print-button>
+          Download PDF
+        </button>
+      ) : (
+        <a href={pdfHref} download>
+          Download PDF
+        </a>
+      )
+    }
+    <a href={profile.primarySiteUrl} rel="me noopener">{primarySiteLabel}</a>
+  </footer>
 </Base>

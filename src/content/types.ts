@@ -14,8 +14,14 @@ export interface Profile {
   phone: string;
   links: Link[];
   summary: string;
+  primarySiteUrl: string;
   siteUrl: string;
   pdfFileName: string;
+}
+
+export interface PrintExperience {
+  hidden?: boolean;
+  highlightCount?: number;
 }
 
 export interface Experience {
@@ -25,6 +31,7 @@ export interface Experience {
   end: YearMonth | null;
   location: string;
   highlights: string[];
+  print?: PrintExperience;
 }
 
 export interface Education {

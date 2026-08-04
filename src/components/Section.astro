@@ -3,16 +3,19 @@ interface Props {
   label: string;
   id: string;
   meta?: string;
+  printMeta?: string;
+  className?: string;
 }
 
-const { label, id, meta } = Astro.props;
+const { label, id, meta, printMeta, className } = Astro.props;
 ---
 
-<section class="section" id={id} aria-labelledby={`${id}-label`}>
+<section class:list={['section', className]} id={id} aria-labelledby={`${id}-label`}>
   <div class="section__head">
     <h2 class="section__label" id={`${id}-label`}>{label}</h2>
     <span class="section__rule" aria-hidden="true"></span>
-    {meta && <span class="section__meta">{meta}</span>}
+    {meta && <span class:list={['section__meta', printMeta && 'screen-only']}>{meta}</span>}
+    {printMeta && <span class="section__meta print-only">{printMeta}</span>}
   </div>
   <slot />
 </section>

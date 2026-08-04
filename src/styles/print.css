@@ -1,7 +1,7 @@
 @media print {
   @page {
     size: A4;
-    margin: 14mm 16mm;
+    margin: 13mm 14mm;
   }
 
   :root {
@@ -17,22 +17,22 @@
 
     --step-label: 7.5pt;
     --step-meta: 8pt;
-    --step-body: 9pt;
-    --step-lead: 10.5pt;
-    --step-role: 11pt;
-    --step-name: 27pt;
+    --step-body: 9.8pt;
+    --step-lead: 10.9pt;
+    --step-role: 11.5pt;
+    --step-name: 29pt;
 
     color-scheme: light;
   }
 
   body {
     background: #fff;
-    line-height: 1.45;
+    line-height: 1.46;
   }
 
   .page {
-    max-width: none;
-    margin: 0;
+    max-width: 182mm;
+    margin: 0 auto;
     padding: 0;
   }
 
@@ -40,6 +40,15 @@
   .masthead__actions,
   .colophon {
     display: none;
+  }
+
+  .screen-only,
+  .print-hidden {
+    display: none;
+  }
+
+  .print-only {
+    display: block;
   }
 
   .masthead,
@@ -54,30 +63,85 @@
   }
 
   .contact {
-    margin-top: 1.1rem;
-    padding-top: 0.7rem;
-    gap: 0.2rem 0.85rem;
+    margin-top: 1.15rem;
+    padding-top: 0.8rem;
+    gap: 1rem;
+  }
+
+  .contact__column {
+    gap: 0.16rem;
   }
 
   .section {
-    margin-top: 1.5rem;
+    margin-top: 1.15rem;
   }
 
   .section__head {
-    margin-bottom: 0.85rem;
+    gap: 0.65rem;
+    margin-bottom: 0.62rem;
+  }
+
+  .section__label {
+    letter-spacing: 0.16em;
+  }
+
+  .section__rule {
+    background: var(--rule);
+  }
+
+  .section__meta {
+    margin-left: auto;
+  }
+
+  .languages-section {
+    margin-top: 1rem;
+  }
+
+  .languages-section .section__head {
+    margin-bottom: 0.45rem;
   }
 
   .roles {
-    gap: 1.15rem;
+    gap: 1.08rem;
   }
 
   .highlights {
-    margin-top: 0.5rem;
-    gap: 0.2rem;
+    margin-top: 0.52rem;
+    gap: 0.28rem;
   }
 
-  .stack {
-    gap: 0.8rem;
+  .lead {
+    line-height: 1.48;
+  }
+
+  .intro {
+    margin-top: 1.15rem;
+  }
+
+  .masthead__title {
+    margin-top: 0.65rem;
+  }
+
+  .role__org,
+  .entry__org {
+    margin-top: 0.14rem;
+  }
+
+  .tenure,
+  .entry__meta {
+    margin-top: 0.34rem;
+  }
+
+  .tenure__dates {
+    min-width: 8.7rem;
+  }
+
+  .entry .highlights {
+    display: none;
+  }
+
+  .languages {
+    gap: 0.2rem 1.2rem;
   }
 
   /* Keep a role, and at least its opening lines, on one page. */

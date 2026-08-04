@@ -16,6 +16,9 @@ export const experiences: Experience[] = [
       "Designed AI-assisted development workflows using coding agents and reusable AI Skills",
       "Explored LLM-powered capabilities to improve both internal engineering workflows and product features",
     ],
+    print: {
+      highlightCount: 2,
+    },
   },
   {
     company: "Lepermislibre",
@@ -30,6 +33,9 @@ export const experiences: Experience[] = [
       "Contributed to roadmap execution within agile cross-functional teams",
       "Helped evolve frontend architecture to improve maintainability",
     ],
+    print: {
+      highlightCount: 1,
+    },
   },
   {
     company: "Cyclofix",
@@ -43,6 +49,9 @@ export const experiences: Experience[] = [
       "Improved frontend consistency and engineering practices",
       "Participated in product discussions and technical decision-making",
     ],
+    print: {
+      highlightCount: 0,
+    },
   },
   {
     company: "Oyez",
@@ -56,6 +65,9 @@ export const experiences: Experience[] = [
       "Improved accessibility for senior-oriented digital products",
       "Developed internal HR and recruitment tools",
     ],
+    print: {
+      hidden: true,
+    },
   },
   {
     company: "Ismérie",
@@ -69,5 +81,8 @@ export const experiences: Experience[] = [
       "Built long-term customer loyalty through service quality",
       "Managed business operations in a fast-paced entrepreneurial environment",
     ],
+    print: {
+      hidden: true,
+    },
   },
 ];

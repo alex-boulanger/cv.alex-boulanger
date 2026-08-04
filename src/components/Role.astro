@@ -10,9 +10,11 @@ const { role } = Astro.props;
 
 const months = monthsBetween(role.start, role.end);
 const isCurrent = role.end === null;
+const printHidden = role.print?.hidden ?? false;
+const printHighlightCount = role.print?.highlightCount;
 ---
 
-<article class="role">
+<article class:list={['role', printHidden && 'print-hidden']}>
   <h3 class="role__title">{role.role}</h3>
   <p class="role__org">
     <span class="role__company">{role.company}</span>
@@ -36,6 +38,18 @@ const isCurrent = role.end === null;
   </p>
 
   <ul class="highlights">
-    {role.highlights.map((highlight) => <li>{highlight}</li>)}
+    {
+      role.highlights.map((highlight, index) => (
+        <li
+          class:list={[
+            printHighlightCount !== undefined &&
+              index >= printHighlightCount &&
+              'print-hidden',
+          ]}
+        >
+          {highlight}
+        </li>
+      ))
+    }
   </ul>
 </article>

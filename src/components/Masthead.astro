@@ -4,6 +4,7 @@ import { profile } from '../content';
 const telHref = `tel:${profile.phone.replace(/[^\d+]/g, '')}`;
 
 const pdfHref = new URL(profile.pdfFileName, profile.siteUrl).href;
+const isDev = import.meta.env.DEV;
 ---
 
 <header class="masthead">
@@ -13,23 +14,48 @@ const pdfHref = new URL(profile.pdfFileName, profile.siteUrl).href;
   </div>
 
   <div class="masthead__actions">
-    <a class="action" href={pdfHref} type="application/pdf" download>
-      Download PDF
-    </a>
+    {
+      isDev ? (
+        <button class="action" type="button" data-print-button>
+          Download PDF
+        </button>
+      ) : (
+        <a class="action" href={pdfHref} type="application/pdf" download>
+          Download PDF
+        </a>
+      )
+    }
   </div>
 </header>
 
-<ul class="contact">
-  <li>{profile.location}</li>
-  <li><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
-  <li><a href={telHref}>{profile.phone}</a></li>
-  {
-    profile.links.map((link) => (
-      <li>
-        <a href={link.href} rel="me noopener">
+{
+  isDev && (
+    <script is:inline>
+      document.addEventListener('click', (event) => {
+        if (
+          event.target instanceof Element &&
+          event.target.closest('[data-print-button]')
+        ) {
+          window.print();
+        }
+      });
+    </script>
+  )
+}
+
+<address class="contact" aria-label="Contact details">
+  <div class="contact__column">
+    <span class="contact__item">{profile.location}</span>
+    <a class="contact__item" href={`mailto:${profile.email}`}>{profile.email}</a>
+    <a class="contact__item" href={telHref}>{profile.phone}</a>
+  </div>
+  <div class="contact__column contact__column--profiles">
+    {
+      profile.links.map((link) => (
+        <a class="contact__item" href={link.href} rel="me noopener">
           {link.label}
         </a>
-      </li>
-    ))
-  }
-</ul>
+      ))
+    }
+  </div>
+</address>
