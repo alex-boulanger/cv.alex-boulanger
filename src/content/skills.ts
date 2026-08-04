@@ -3,15 +3,7 @@ import type { SkillGroup } from "./types";
 export const skillGroups: SkillGroup[] = [
   {
     label: "Engineering",
-    items: [
-      "TypeScript",
-      "React",
-      "Node.js",
-      "NestJS",
-      "REST APIs",
-      "PostgreSQL",
-      "Nx Monorepo",
-    ],
+    items: ["TypeScript", "React Native", "Node.js", "REST APIs", "SQL"],
   },
   {
     label: "Product",

@@ -292,6 +292,30 @@ a:hover {
   white-space: nowrap;
 }
 
+.contact__item--external {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28em;
+}
+
+.contact__external {
+  width: 0.62em;
+  height: 0.62em;
+  flex: none;
+  margin-top: 0.08em;
+  color: var(--ink-3);
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.45;
+  fill: none;
+  transition: color 0.15s ease;
+}
+
+.contact__item--external:hover .contact__external {
+  color: var(--accent);
+}
+
 .contact a {
   border-bottom-color: var(--rule);
 }
@@ -561,32 +585,50 @@ a:hover {
 --------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: no-preference) {
-  .masthead,
-  .contact,
-  .section {
-    animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  .reveal {
+    animation: reveal 0.58s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--reveal-delay, 0ms);
   }
 
-  .contact {
-    animation-delay: 0.06s;
+  .reveal--masthead {
+    --reveal-delay: 0ms;
   }
 
-  .section:nth-of-type(1) {
-    animation-delay: 0.12s;
+  .reveal--intro {
+    --reveal-delay: 70ms;
   }
 
-  .section:nth-of-type(2) {
-    animation-delay: 0.18s;
+  .reveal--competencies {
+    --reveal-delay: 140ms;
   }
 
-  .section:nth-of-type(n + 3) {
-    animation-delay: 0.24s;
+  .reveal--experience {
+    --reveal-delay: 210ms;
+  }
+
+  .reveal--education {
+    --reveal-delay: 280ms;
+  }
+
+  .reveal--languages {
+    --reveal-delay: 350ms;
+  }
+
+  .reveal--footer {
+    --reveal-delay: 420ms;
   }
 }
 
-@keyframes rise {
+@keyframes reveal {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    filter: blur(20px);
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
   }
 }

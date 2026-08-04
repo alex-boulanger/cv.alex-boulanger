@@ -51,8 +51,10 @@
     display: block;
   }
 
+  .identity,
   .masthead,
   .contact,
+  .reveal,
   .section {
     animation: none;
   }
@@ -70,6 +72,10 @@
 
   .contact__column {
     gap: 0.16rem;
+  }
+
+  .contact__external {
+    display: none;
   }
 
   .section {

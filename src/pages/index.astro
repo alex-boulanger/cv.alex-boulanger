@@ -27,9 +27,13 @@ const isDev = import.meta.env.DEV;
   <Masthead />
 
   <main>
-    <p class="lead intro">{profile.summary}</p>
+    <p class="lead intro reveal reveal--intro">{profile.summary}</p>
 
-    <Section id="competencies" label="Core Competencies" className="screen-only">
+    <Section
+      id="competencies"
+      label="Core Competencies"
+      className="screen-only reveal reveal--competencies"
+    >
       <div class="stack">
         {
           skillGroups.map((group) => (
@@ -47,6 +51,7 @@ const isDev = import.meta.env.DEV;
       label="Experience"
       meta={`${experiences.length} roles`}
       printMeta={`${experiences.filter((role) => !role.print?.hidden).length} recent roles`}
+      className="reveal reveal--experience"
     >
       <div class="roles">
         {experiences.map((role) => <Role role={role} />)}
@@ -55,7 +60,7 @@ const isDev = import.meta.env.DEV;
 
     {
       education.length > 0 && (
-        <Section id="education" label="Education">
+        <Section id="education" label="Education" className="reveal reveal--education">
           <div class="roles">
             {education.map((entry) => (
               <article class="entry">
@@ -90,7 +95,11 @@ const isDev = import.meta.env.DEV;
       )
     }
 
-    <Section id="languages" label="Languages" className="languages-section">
+    <Section
+      id="languages"
+      label="Languages"
+      className="languages-section reveal reveal--languages"
+    >
       <ul class="languages">
         {
           languages.map((language) => (
@@ -104,7 +113,7 @@ const isDev = import.meta.env.DEV;
     </Section>
   </main>
 
-  <footer class="colophon screen-only">
+  <footer class="colophon screen-only reveal reveal--footer">
     <span>Updated {updated}</span>
     {
       isDev ? (

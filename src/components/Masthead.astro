@@ -7,26 +7,59 @@ const pdfHref = new URL(profile.pdfFileName, profile.siteUrl).href;
 const isDev = import.meta.env.DEV;
 ---
 
-<header class="masthead">
-  <div>
-    <h1 class="masthead__name">{profile.name}</h1>
-    <p class="masthead__title">{profile.title}</p>
-  </div>
+<div class="identity reveal reveal--masthead">
+  <header class="masthead">
+    <div>
+      <h1 class="masthead__name">{profile.name}</h1>
+      <p class="masthead__title">{profile.title}</p>
+    </div>
 
-  <div class="masthead__actions">
-    {
-      isDev ? (
-        <button class="action" type="button" data-print-button>
-          Download PDF
-        </button>
-      ) : (
-        <a class="action" href={pdfHref} type="application/pdf" download>
-          Download PDF
-        </a>
-      )
-    }
-  </div>
-</header>
+    <div class="masthead__actions">
+      {
+        isDev ? (
+          <button class="action" type="button" data-print-button>
+            Download PDF
+          </button>
+        ) : (
+          <a class="action" href={pdfHref} type="application/pdf" download>
+            Download PDF
+          </a>
+        )
+      }
+    </div>
+  </header>
+
+  <address class="contact" aria-label="Contact details">
+    <div class="contact__column">
+      <span class="contact__item">{profile.location}</span>
+      <a class="contact__item" href={`mailto:${profile.email}`}>{profile.email}</a>
+      <a class="contact__item" href={telHref}>{profile.phone}</a>
+    </div>
+    <div class="contact__column contact__column--profiles">
+      {
+        profile.links.map((link) => (
+          <a
+            class="contact__item contact__item--external"
+            href={link.href}
+            target="_blank"
+            rel="me noopener noreferrer"
+          >
+            {link.label}
+            <svg
+              class="contact__external"
+              viewBox="0 0 12 12"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M3.25 8.75 8.75 3.25"></path>
+              <path d="M4.75 3.25h4v4"></path>
+            </svg>
+          </a>
+        ))
+      }
+    </div>
+  </address>
+</div>
 
 {
   isDev && (
@@ -42,20 +75,3 @@ const isDev = import.meta.env.DEV;
     </script>
   )
 }
-
-<address class="contact" aria-label="Contact details">
-  <div class="contact__column">
-    <span class="contact__item">{profile.location}</span>
-    <a class="contact__item" href={`mailto:${profile.email}`}>{profile.email}</a>
-    <a class="contact__item" href={telHref}>{profile.phone}</a>
-  </div>
-  <div class="contact__column contact__column--profiles">
-    {
-      profile.links.map((link) => (
-        <a class="contact__item" href={link.href} rel="me noopener">
-          {link.label}
-        </a>
-      ))
-    }
-  </div>
-</address>

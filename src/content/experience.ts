@@ -17,7 +17,7 @@ export const experiences: Experience[] = [
       "Explored LLM-powered capabilities to improve both internal engineering workflows and product features",
     ],
     print: {
-      highlightCount: 2,
+      highlightCount: 3,
     },
   },
   {
@@ -34,7 +34,7 @@ export const experiences: Experience[] = [
       "Helped evolve frontend architecture to improve maintainability",
     ],
     print: {
-      highlightCount: 1,
+      highlightCount: 3,
     },
   },
   {
@@ -50,7 +50,7 @@ export const experiences: Experience[] = [
       "Participated in product discussions and technical decision-making",
     ],
     print: {
-      highlightCount: 0,
+      highlightCount: 2,
     },
   },
   {
