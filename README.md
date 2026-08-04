@@ -13,30 +13,30 @@ src/content/*.ts ──▶ Astro components ──▶ HTML ──┬──▶ br
 
 Everything a reader sees comes from `src/content/`:
 
-| File            | What it holds                                       |
-| --------------- | --------------------------------------------------- |
-| `profile.ts`    | Name, headline, contact details, summary, PDF name   |
-| `experience.ts` | Roles, reverse-chronological                         |
-| `education.ts`  | Schools and programmes                               |
-| `skills.ts`     | Grouped competencies                                 |
-| `languages.ts`  | Languages and levels                                 |
-| `types.ts`      | The shape of all of the above                        |
+| File            | What it holds                                      |
+| --------------- | -------------------------------------------------- |
+| `profile.ts`    | Name, headline, contact details, summary, PDF name |
+| `experience.ts` | Roles, reverse-chronological                       |
+| `education.ts`  | Schools and programmes                             |
+| `skills.ts`     | Grouped competencies                               |
+| `languages.ts`  | Languages and levels                               |
+| `types.ts`      | The shape of all of the above                      |
 
 Dates are `YYYY-MM` strings; an `end` of `null` means the role is current.
-Durations, the tenure bars and the structured data are all derived from them —
-no duration is written by hand.
+Durations and the structured data are derived from them — no duration is
+written by hand.
 
 ## Commands
 
-| Command                | What it does                                        |
-| ---------------------- | --------------------------------------------------- |
-| `pnpm dev`             | Dev server on `localhost:4321`                       |
-| `pnpm build`           | Builds `dist/`, then prints the PDF and the OG card  |
-| `pnpm build:site`      | Builds `dist/` only — faster when styling            |
-| `pnpm pdf`             | Prints the PDF from an existing `dist/`              |
-| `pnpm preview`         | Serves `dist/` as it will be deployed                |
-| `pnpm check`           | Type-checks the project and looks for placeholders   |
-| `pnpm check:content`   | Fails if any résumé data still says `TODO`           |
+| Command              | What it does                                        |
+| -------------------- | --------------------------------------------------- |
+| `pnpm dev`           | Dev server on `localhost:4321`                      |
+| `pnpm build`         | Builds `dist/`, then prints the PDF and the OG card |
+| `pnpm build:site`    | Builds `dist/` only — faster when styling           |
+| `pnpm pdf`           | Prints the PDF from an existing `dist/`             |
+| `pnpm preview`       | Serves `dist/` as it will be deployed               |
+| `pnpm check`         | Type-checks the project and looks for placeholders  |
+| `pnpm check:content` | Fails if any résumé data still says `TODO`          |
 
 The PDF needs Chromium once: `pnpm exec playwright install chromium`.
 
@@ -54,24 +54,71 @@ from splitting across pages. There is no second template to keep in sync.
 - Space Grotesk and IBM Plex Mono are self-hosted in `public/fonts/`; no third-party
   requests at runtime.
 - Dark mode follows the system on screen. The PDF is always light.
-- The tenure bar next to each role is the one piece of ornament, and it is
-  drawn from the dates: all bars share a scale, so tenure is visible at a
-  glance.
+- The page ships no JavaScript at all.
+- The masthead links to the PDF by absolute URL. The file is written into
+  `dist/` at build time and `astro dev` only serves `public/`, so a relative
+  link would 404 in development.
 
 ## Deploying
 
 `.github/workflows/deploy.yml` runs on every push to `main`: content check,
-install Chromium, build, print, then `wrangler pages deploy dist`.
+install Chromium, build, print the PDF, then `wrangler pages deploy`. The
+project name (`cv`) and the uploaded directory (`dist`) come from
+`wrangler.toml`, so the workflow and the config cannot drift apart.
 
-Two repository secrets are required:
+### One-time Cloudflare setup
 
-- `CLOUDFLARE_API_TOKEN` — a token with the **Cloudflare Pages: Edit**
-  permission
+Everything below is account-level and only needs doing once. Run the `wrangler`
+commands locally — they will open a browser to authenticate.
+
+**1. Create the Pages project.**
+
+```sh
+pnpm dlx wrangler pages project create cv --production-branch=main
+```
+
+**2. Collect the two values the workflow needs.**
+
+`pnpm dlx wrangler whoami` prints the account ID. For the token, go to
+**My Profile → API Tokens → Create Token → Create Custom Token** and grant:
+
+| Scope   | Resource         | Permission |
+| ------- | ---------------- | ---------- |
+| Account | Cloudflare Pages | Edit       |
+
+Add both as repository secrets under **Settings → Secrets and variables →
+Actions**:
+
+- `CLOUDFLARE_API_TOKEN`
 - `CLOUDFLARE_ACCOUNT_ID`
 
-The workflow deploys to a Pages project named `cv`; change `--project-name` if
-yours differs. Point `cv.alex-boulanger.dev` at the project under **Custom
-domains**.
+**3. Push to `main`** so a production deployment exists. A custom domain cannot
+be attached to a project that has never deployed.
 
-The PDF is published alongside the site at
-`/alex-boulanger-resume.pdf`.
+**4. Attach the subdomain.** In the dashboard: **Workers & Pages → cv → Custom
+domains → Set up a custom domain**, and enter `cv.alex-boulanger.dev`.
+
+Because `alex-boulanger.dev` is a zone on the same Cloudflare account,
+Cloudflare creates the `cv` CNAME for you and issues the certificate — nothing
+to add in DNS by hand. If the zone ever moves off Cloudflare, add a proxied
+`CNAME cv → cv.pages.dev` instead.
+
+The same step via the API, if you would rather not click:
+
+```sh
+curl -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects/cv/domains" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"cv.alex-boulanger.dev"}'
+```
+
+### Notes
+
+- `astro.config.mjs` and `src/content/profile.ts` both hardcode
+  `https://cv.alex-boulanger.dev`. They drive the canonical URL, the Open Graph
+  tags and the PDF link — change them together if the domain changes.
+- The project keeps serving `cv.pages.dev` alongside the custom domain. The
+  `<link rel="canonical">` in the page points at the custom domain, so search
+  engines only index one of them.
+- The PDF is published alongside the site at `/alex-boulanger-resume.pdf`.

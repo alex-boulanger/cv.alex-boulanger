@@ -1,11 +1,3 @@
-/* ---------------------------------------------------------------------------
-   Print — the same document, measured for A4.
-
-   Playwright renders the PDF from this stylesheet, so what a recruiter opens
-   is the page they saw, not a second template. Screen colours are pinned back
-   to the light palette here because a PDF is always printed on white.
---------------------------------------------------------------------------- */
-
 @media print {
   @page {
     size: A4;
@@ -111,7 +103,6 @@
   }
 
   /* Chromium drops backgrounds unless asked twice. */
-  .tenure__track,
   .highlights li::before,
   .section__rule,
   .contact {

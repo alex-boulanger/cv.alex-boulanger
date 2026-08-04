@@ -36,8 +36,11 @@ jobs:
       # Builds the site and prints the PDF from it.
       - run: pnpm run build
 
+      # Project name and output directory come from wrangler.toml.
+      # --branch=main marks this a production deployment, which is what the
+      # custom domain serves.
       - uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=cv --branch=main
+          command: pages deploy --branch=main

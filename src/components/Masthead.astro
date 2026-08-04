@@ -2,6 +2,8 @@
 import { profile } from '../content';
 
 const telHref = `tel:${profile.phone.replace(/[^\d+]/g, '')}`;
+
+const pdfHref = new URL(profile.pdfFileName, profile.siteUrl).href;
 ---
 
 <header class="masthead">
@@ -10,10 +12,11 @@ const telHref = `tel:${profile.phone.replace(/[^\d+]/g, '')}`;
     <p class="masthead__title">{profile.title}</p>
   </div>
 
-  <nav class="masthead__actions" aria-label="Document">
-    <a class="action" href={`/${profile.pdfFileName}`} download>PDF</a>
-    <button class="action" type="button" data-print>Print</button>
-  </nav>
+  <div class="masthead__actions">
+    <a class="action" href={pdfHref} type="application/pdf" download>
+      Download PDF
+    </a>
+  </div>
 </header>
 
 <ul class="contact">
@@ -30,9 +33,3 @@ const telHref = `tel:${profile.phone.replace(/[^\d+]/g, '')}`;
     ))
   }
 </ul>
-
-<script>
-  document
-    .querySelector('[data-print]')
-    ?.addEventListener('click', () => window.print());
-</script>

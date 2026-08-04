@@ -4,14 +4,11 @@ import { formatDuration, formatMonth, monthsBetween } from '../lib/dates';
 
 interface Props {
   role: Experience;
-  /** Longest tenure in the list — every bar is drawn against this scale. */
-  scale: number;
 }
 
-const { role, scale } = Astro.props;
+const { role } = Astro.props;
 
 const months = monthsBetween(role.start, role.end);
-const fill = `${Math.round((months / scale) * 100)}%`;
 const isCurrent = role.end === null;
 ---
 
@@ -35,8 +32,6 @@ const isCurrent = role.end === null;
         )
       }
     </span>
-    <span class="tenure__track" style={`--fill: ${fill}`} aria-hidden="true"
-    ></span>
     <span class="tenure__length">{formatDuration(months)}</span>
   </p>
 

@@ -1,0 +1,13 @@
+# Cloudflare Pages project.
+#
+# `name` is the project the deploy uploads to, and `pages_build_output_dir` is
+# what gets uploaded — so `wrangler pages deploy` needs no arguments and the
+# workflow cannot drift from this file.
+#
+# The custom domain (cv.alex-boulanger.dev) is not configured here. Pages
+# custom domains live on the account, not in the repo — see the deploy section
+# of README.md for the one-time setup.
+
+name = "cv"
+compatibility_date = "2026-08-04"
+pages_build_output_dir = "dist"

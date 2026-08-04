@@ -10,12 +10,7 @@ import {
   profile,
   skillGroups,
 } from '../content';
-import { formatMonth, monthsBetween } from '../lib/dates';
-
-/** Every tenure bar is drawn against the longest role, so the bars compare. */
-const scale = Math.max(
-  ...experiences.map((role) => monthsBetween(role.start, role.end)),
-);
+import { formatMonth } from '../lib/dates';
 
 const updated = new Intl.DateTimeFormat('en', {
   month: 'long',
@@ -52,7 +47,7 @@ const title = `${profile.name} — ${profile.title}`;
       meta={`${experiences.length} roles`}
     >
       <div class="roles">
-        {experiences.map((role) => <Role role={role} scale={scale} />)}
+        {experiences.map((role) => <Role role={role} />)}
       </div>
     </Section>
 
@@ -104,6 +99,6 @@ const title = `${profile.name} — ${profile.title}`;
   </main>
 
   <p class="colophon">
-    Updated {updated} · Built with Astro · Set in Space Grotesk
+    Updated {updated}
   </p>
 </Base>

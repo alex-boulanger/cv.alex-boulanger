@@ -1,39 +1,35 @@
-import type { SkillGroup } from './types';
+import type { SkillGroup } from "./types";
 
-/**
- * Grouped so a human reads three themes and an ATS reads the keywords.
- * Keep each group to a single line's worth of terms.
- */
 export const skillGroups: SkillGroup[] = [
   {
-    label: 'Product',
+    label: "Engineering",
     items: [
-      'Product Development',
-      'Cross-functional Collaboration',
-      'User-Centered Design',
-      'Agile Delivery',
-      'Feature Ownership',
+      "TypeScript",
+      "React",
+      "Node.js",
+      "NestJS",
+      "REST APIs",
+      "PostgreSQL",
+      "Nx Monorepo",
     ],
   },
   {
-    label: 'Engineering',
+    label: "Product",
     items: [
-      'TypeScript',
-      'React',
-      'Node.js',
-      'NestJS',
-      'REST APIs',
-      'PostgreSQL',
-      'Nx Monorepo',
+      "Product Development",
+      "Cross-functional Collaboration",
+      "User-Centered Design",
+      "Agile Delivery",
+      "Feature Ownership",
     ],
   },
   {
-    label: 'AI & Innovation',
+    label: "AI & Innovation",
     items: [
-      'LLM Integration',
-      'AI-assisted Development',
-      'Developer Experience',
-      'Engineering Productivity',
+      "LLM Integration",
+      "AI-assisted Development",
+      "Developer Experience",
+      "Engineering Productivity",
     ],
   },
 ];

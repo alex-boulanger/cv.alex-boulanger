@@ -2,7 +2,7 @@ import type { Profile } from "./types";
 
 export const profile: Profile = {
   name: "Alex Boulanger",
-  title: "Product Engineer · Full-Stack Engineer",
+  title: "Full-Stack Engineer | Product Engineer",
   location: "Brussels (Relocating)",
   email: "alexbakerdeveloper@gmail.com",
   phone: "+33 6 65 04 79 84",
