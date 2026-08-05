@@ -105,13 +105,13 @@
    of the two stylesheets ends up being. */
 @media screen and (prefers-color-scheme: dark) {
   :root {
-    --paper: #0f1315;
-    --paper-raised: #151a1c;
+    --paper: #080b0d;
+    --paper-raised: #101416;
     --ink: #e7eae8;
     --ink-2: #a3aca9;
     --ink-3: #6f7a77;
-    --rule: #232a2b;
-    --rule-strong: #333c3d;
+    --rule: #1c2324;
+    --rule-strong: #2d3637;
     --accent: #57c2a6;
     --accent-quiet: rgba(87, 194, 166, 0.16);
   }
