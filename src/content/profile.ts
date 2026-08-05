@@ -2,7 +2,7 @@ import type { Profile } from "./types";
 
 export const profile: Profile = {
   name: "Alex Boulanger",
-  title: "Full-Stack Engineer · Product Engineer",
+  title: "Full-Stack Developer · Product Enthousiast",
   location: "Brussels (Relocating)",
   email: "alexbakerdeveloper@gmail.com",
   phone: "+33 6 65 04 79 84",
@@ -20,7 +20,7 @@ export const profile: Profile = {
   ],
 
   summary:
-    "Full-Stack Engineer with 6+ years of experience building digital products from concept to production. Experienced across frontend, backend and product delivery, working closely with Product Managers, Designers and Engineers to transform business needs into scalable software. Passionate about developer experience, AI-assisted workflows and building products that create measurable value for users.",
+    "Full-Stack Developer with 6+ years of experience building digital products from concept to production. Experienced across frontend, backend and product delivery, working closely with Product Managers, Designers and Engineers to transform business needs into scalable software. Passionate about developer experience, AI-assisted workflows and building products that create measurable value for users.",
 
   primarySiteUrl: "https://alex-boulanger.dev",
   siteUrl: "https://cv.alex-boulanger.dev",
